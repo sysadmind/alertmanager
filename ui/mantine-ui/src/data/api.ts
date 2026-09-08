@@ -1,8 +1,7 @@
 import { type QueryKey, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
-// TODO(@sysadmind): Infer this from the current location.
-// We don't have a good strategy for storing global settings yet.
-const pathPrefix = '';
+import { useSettings } from '@/state/settings';
+
 export const API_PATH = 'api/v2';
 
 type APIError = {
@@ -121,6 +120,8 @@ export const useAPIQuery = <T>({
   refetchInterval,
   recordResponseTime,
 }: QueryOptions) => {
+  const { pathPrefix } = useSettings();
+
   return useQuery<T>({
     queryKey: key ?? [API_PATH, path, params],
     retry: false,
@@ -133,6 +134,8 @@ export const useAPIQuery = <T>({
 };
 
 export const useSuspenseAPIQuery = <T>({ key, path, params }: QueryOptions) => {
+  const { pathPrefix } = useSettings();
+
   return useSuspenseQuery<T>({
     queryKey: key !== undefined ? key : [path, params],
     retry: false,

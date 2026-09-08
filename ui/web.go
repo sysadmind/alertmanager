@@ -213,6 +213,9 @@ func Register(r *route.Router) {
 		serveAssets(w, req, elmFS)
 	})
 
+	// The Mantine application derives the Alertmanager route prefix by stripping
+	// this mount point from the browser location, so relocating it also requires
+	// updating appRoot in ui/mantine-ui/src/lib/pathPrefix.ts.
 	r.Get("/ui", func(w http.ResponseWriter, req *http.Request) {
 		http.Redirect(w, req, req.URL.Path+"/", http.StatusFound)
 	})
