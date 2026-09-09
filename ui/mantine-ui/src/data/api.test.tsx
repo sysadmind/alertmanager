@@ -120,7 +120,7 @@ describe('createQueryFn', () => {
 
   it('throws "Network error..." when the server is unreachable', async () => {
     // Port 1 requires root on Linux and is never open in test environments.
-    const unreachable = createQueryFn({ pathPrefix: 'http://localhost:1', path: '/test' });
+    const unreachable = createQueryFn({ pathPrefix: 'http://localhost:0', path: '/test' });
     await expect(unreachable({ signal: signal() })).rejects.toThrow(
       'Network error or unable to reach the server'
     );
